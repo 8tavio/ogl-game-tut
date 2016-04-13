@@ -13,33 +13,34 @@ int main (void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-	if (!window) {
-		glfwTerminate();
-		return -1;
-	}
+	window = glfwCreateWindow(640, 640, "Hola mundo", NULL, NULL);
+		if (!window) 
+		{
+			glfwTerminate();
+			return -1;
+		}	
 
-	gameWindow = new GameWindow(true, window);
+		gameWindow = new GameWindow(true, window);
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
 	/* Loop until the user closes the window */
-	while (gameWindow->getRunning()) {
+		while (gameWindow->getRunning()) 
+		{
+			/* Render here */
 
-		/* Render here */
+			gameWindow->render();
+			gameWindow->update();
 
-		gameWindow->render();
-		gameWindow->update();
+			/* Poll for and process events */
+			glfwPollEvents();
 
-		/* Poll for and process events */
-		glfwPollEvents();
+			gameWindow->setRunning(!glfwWindowShouldClose(window));
+		}
 
-		gameWindow->setRunning(!glfwWindowShouldClose(window));
-	}
+		delete gameWindow;
 
-	delete gameWindow;
-
-	glfwTerminate();
-	return 0;
+		glfwTerminate();
+		return 0;
 }
